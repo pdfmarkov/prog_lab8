@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="libFromClient">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../CommandLib/out/artifacts/CommandLib_jar/CommandLib.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Client/lib/slf4j-api-1.7.30.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Client/lib/logback-core-1.3.0-alpha5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Client/lib/logback-classic-1.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Client/lib/gson-2.8.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Server/lib/postgresql-42.2.12.jre6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Server/lib/postgresql-42.2.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
