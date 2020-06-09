@@ -2,13 +2,12 @@ package markovpetr.graphic;
 
 import com.markovpetr.command.entity.*;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
+import javafx.stage.WindowEvent;
 import markovpetr.main.Main;
 
 import java.io.FileInputStream;
@@ -125,6 +124,7 @@ public class MainController extends Thread implements Initializable {
     @FXML
     private TableView<Person> dbTable;
 
+
     private String pressReady = " " + Main.resourceBundle.getString("ready_line_text");
     private ObservableList<Person> masterData = FXCollections.observableArrayList();
     private List<Person> persons = new LinkedList<>();
@@ -132,6 +132,10 @@ public class MainController extends Thread implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        setDaemon(true);
+        setUsername(Main.username);
+        Main.mainController = this;
 
         idColoumn.setCellValueFactory(new PropertyValueFactory<Person, Long>("id"));
         nameColoumn.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
@@ -144,9 +148,8 @@ public class MainController extends Thread implements Initializable {
         locationColoumn.setCellValueFactory(new PropertyValueFactory<Person, Location>("location"));
         userColoumn.setCellValueFactory(new PropertyValueFactory<Person, User>("owner"));
 
-        setDaemon(true);
-        setUsername(Main.username);
         buildDataWithProp();
+
 
         FilteredList<Person> filteredData = new FilteredList<>(masterData, p -> true);
         createListeners(filteredData);
@@ -164,7 +167,11 @@ public class MainController extends Thread implements Initializable {
      *    BUTTONS     *
      *******************/
 
+
+
     public void update(ActionEvent actionEvent) {
+
+
         inputField.clear();
         AtomicReference<String> update = new AtomicReference<>("update ");
         outputField.setText("Введите id" + pressReady);
@@ -316,62 +323,33 @@ public class MainController extends Thread implements Initializable {
     }
 
     public void add(ActionEvent actionEvent) {
-        inputField.clear();
-        AtomicReference<String> add = new AtomicReference<>("add\n");
-        outputField.setText("Введите имя" + pressReady);
-        readyButton.setOnAction(event1 -> {
-            add.set(add + inputField.getText() + "\n");
-            inputField.clear();
-            outputField.setText("Ввод объека Coordinates:\nВведите x" + pressReady);
-            readyButton.setOnAction(event2 -> {
-                add.set(add + inputField.getText() + "\n");
-                inputField.clear();
-                outputField.setText("Введите y" + pressReady);
-                readyButton.setOnAction(event3 -> {
-                    add.set(add + inputField.getText() + "\n");
-                    inputField.clear();
-                    outputField.setText("Введите рост" + pressReady);
-                    readyButton.setOnAction(event4 -> {
-                        add.set(add + inputField.getText() + "\n");
-                        inputField.clear();
-                        outputField.setText("Введите индетификатор паспорта" + pressReady);
-                        readyButton.setOnAction(event5 -> {
-                            add.set(add + inputField.getText() + "\n");
-                            inputField.clear();
-                            outputField.setText("Введите одно из значений: green, red, yellow, white" + pressReady);
-                            readyButton.setOnAction(event6 -> {
-                                add.set(add + inputField.getText() + "\n");
-                                inputField.clear();
-                                outputField.setText("Введите одно из значений: uk, vatican, italy" + pressReady);
-                                readyButton.setOnAction(event7 -> {
-                                    add.set(add + inputField.getText() + "\n");
-                                    inputField.clear();
-                                    outputField.setText("Ввод объека Location:\nВведите x" + pressReady);
-                                    readyButton.setOnAction(event8 -> {
-                                        add.set(add + inputField.getText() + "\n");
-                                        inputField.clear();
-                                        outputField.setText("Введите y" + pressReady);
-                                        readyButton.setOnAction(event9 -> {
-                                            add.set(add + inputField.getText() + "\n");
-                                            inputField.clear();
-                                            outputField.setText("Введите название локации" + pressReady);
-                                            readyButton.setOnAction(event10 -> {
-                                                add.set(add + inputField.getText());
-                                                inputField.clear();
-                                                Main.client.executeCommand(String.valueOf(add));
-                                                waitForAnswer();
-                                                outputField.setText(Main.answerLine);
-                                                buildDataWithProp();
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
+
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("add.fxml"),Main.resourceBundle);
+        Parent root1;
+        try {
+            root1 = loader.load();
+            Stage stage1 = new Stage();
+            stage1.setTitle("Person");
+            stage1.getIcons().add(new Image(getClass().getResourceAsStream("../pictures/eva.png")));
+            stage1.setScene(new Scene(root1));
+            stage1.setResizable(false);
+            stage1.sizeToScene();
+            stage1.showAndWait();
+
+            stage1.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    buildDataWithProp();
+                }
             });
-        });
+
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setTitle("Error");
+            alert.setHeaderText("Person error");
+            alert.setContentText("Can't open person's window");
+        }
     }
 
     public void minbyid(ActionEvent actionEvent) {

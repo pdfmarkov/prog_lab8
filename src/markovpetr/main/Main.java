@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import markovpetr.client.Client;
+import markovpetr.graphic.MainController;
 import markovpetr.graphic.UserController;
 
 
@@ -23,9 +24,10 @@ public class Main extends Application {
     public static String answerLine="";
     public static Client client = new Client();
     public static String username;
-    public static Timer timer = new Timer();
     public static ResourceBundle resourceBundle;
+    public static MainController mainController;
     public static Person person;
+
 
     @Override
     public void start(Stage primaryStage){
