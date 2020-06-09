@@ -53,7 +53,7 @@
             <Font name="Comic Sans MS" size="35.0" />
          </font>
       </Label>
-      <MenuButton layoutX="434.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="192.0" style="-fx-background-color: f39c63;" text="%lang_button" textFill="WHITE">
+      <MenuButton layoutX="434.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="192.0" style="-fx-background-color: f39c63;" text="%lang_button.text" textFill="WHITE">
          <items>
             <MenuItem fx:id="rusButton" mnemonicParsing="false" onAction="#rus" text="Русский" />
             <MenuItem fx:id="serbButton" mnemonicParsing="false" onAction="#serb" text="Српски" />

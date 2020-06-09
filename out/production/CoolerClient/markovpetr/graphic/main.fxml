@@ -95,7 +95,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="%draw_text">
+          <Tab onSelectionChanged="#startDraw" text="%draw_text">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                      <children>
@@ -106,7 +106,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <MenuButton layoutX="961.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="199.0" text="%lang_button">
+      <MenuButton layoutX="961.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="199.0" text="%lang_button.text">
          <items>
             <MenuItem fx:id="rusButton" mnemonicParsing="false" onAction="#rus" text="Русский" />
             <MenuItem fx:id="serbButton" mnemonicParsing="false" onAction="#serb" text="Српски" />
