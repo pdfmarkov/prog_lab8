@@ -27,6 +27,7 @@ public class Main extends Application {
     public static ResourceBundle resourceBundle;
     public static MainController mainController;
     public static Person person;
+    public static Integer id;
 
 
     @Override

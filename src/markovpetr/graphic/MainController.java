@@ -170,69 +170,32 @@ public class MainController extends Thread implements Initializable {
 
 
     public void update(ActionEvent actionEvent) {
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("update.fxml"),Main.resourceBundle);
+        Parent root2;
+        try {
+            root2 = loader.load();
+            Stage stage2 = new Stage();
+            stage2.setTitle("Update");
+            stage2.getIcons().add(new Image(getClass().getResourceAsStream("../pictures/eva.png")));
+            stage2.setScene(new Scene(root2));
+            stage2.setResizable(false);
+            stage2.sizeToScene();
+            stage2.showAndWait();
 
-
-        inputField.clear();
-        AtomicReference<String> update = new AtomicReference<>("update ");
-        outputField.setText("Введите id" + pressReady);
-        readyButton.setOnAction(event0 -> {
-            update.set(update + inputField.getText());
-            inputField.clear();
-            outputField.setText("Введите имя" + pressReady);
-            readyButton.setOnAction(event1 -> {
-                update.set(update + inputField.getText() + "\n");
-                inputField.clear();
-                outputField.setText("Ввод объека Coordinates:\nВведите x" + pressReady);
-                readyButton.setOnAction(event2 -> {
-                    update.set(update + inputField.getText() + "\n");
-                    inputField.clear();
-                    outputField.setText("Введите y" + pressReady);
-                    readyButton.setOnAction(event3 -> {
-                        update.set(update + inputField.getText() + "\n");
-                        inputField.clear();
-                        outputField.setText("Введите рост" + pressReady);
-                        readyButton.setOnAction(event4 -> {
-                            update.set(update + inputField.getText() + "\n");
-                            inputField.clear();
-                            outputField.setText("Введите индетификатор паспорта" + pressReady);
-                            readyButton.setOnAction(event5 -> {
-                                update.set(update + inputField.getText() + "\n");
-                                inputField.clear();
-                                outputField.setText("Введите одно из значений: green, red, yellow, white" + pressReady);
-                                readyButton.setOnAction(event6 -> {
-                                    update.set(update + inputField.getText() + "\n");
-                                    inputField.clear();
-                                    outputField.setText("Введите одно из значений: uk, vatican, italy" + pressReady);
-                                    readyButton.setOnAction(event7 -> {
-                                        update.set(update + inputField.getText() + "\n");
-                                        inputField.clear();
-                                        outputField.setText("Ввод объека Location:\nВведите x" + pressReady);
-                                        readyButton.setOnAction(event8 -> {
-                                            update.set(update + inputField.getText() + "\n");
-                                            inputField.clear();
-                                            outputField.setText("Введите y" + pressReady);
-                                            readyButton.setOnAction(event9 -> {
-                                                update.set(update + inputField.getText() + "\n");
-                                                inputField.clear();
-                                                outputField.setText("Введите название локации" + pressReady);
-                                                readyButton.setOnAction(event10 -> {
-                                                    update.set(update + inputField.getText());
-                                                    inputField.clear();
-                                                    Main.client.executeCommand(String.valueOf(update));
-                                                    waitForAnswer();
-                                                    outputField.setText(Main.answerLine);
-                                                    buildDataWithProp();
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
+            stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    buildDataWithProp();
+                }
             });
-        });
+
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setTitle("Error");
+            alert.setHeaderText("Person error");
+            alert.setContentText("Can't open update window");
+        }
     }
 
     public void remove(ActionEvent actionEvent) {
@@ -257,62 +220,32 @@ public class MainController extends Thread implements Initializable {
     }
 
     public void removegreater(ActionEvent actionEvent) {
-        inputField.clear();
-        AtomicReference<String> remove_greater = new AtomicReference<>("remove_greater\n");
-        outputField.setText("Введите имя" + pressReady);
-        readyButton.setOnAction(event1 -> {
-            remove_greater.set(remove_greater + inputField.getText() + "\n");
-            inputField.clear();
-            outputField.setText("Ввод объека Coordinates:\nВведите x" + pressReady);
-            readyButton.setOnAction(event2 -> {
-                remove_greater.set(remove_greater + inputField.getText() + "\n");
-                inputField.clear();
-                outputField.setText("Введите y" + pressReady);
-                readyButton.setOnAction(event3 -> {
-                    remove_greater.set(remove_greater + inputField.getText() + "\n");
-                    inputField.clear();
-                    outputField.setText("Введите рост" + pressReady);
-                    readyButton.setOnAction(event4 -> {
-                        remove_greater.set(remove_greater + inputField.getText() + "\n");
-                        inputField.clear();
-                        outputField.setText("Введите индетификатор паспорта" + pressReady);
-                        readyButton.setOnAction(event5 -> {
-                            remove_greater.set(remove_greater + inputField.getText() + "\n");
-                            inputField.clear();
-                            outputField.setText("Введите одно из значений: green, red, yellow, white" + pressReady);
-                            readyButton.setOnAction(event6 -> {
-                                remove_greater.set(remove_greater + inputField.getText() + "\n");
-                                inputField.clear();
-                                outputField.setText("Введите одно из значений: uk, vatican, italy" + pressReady);
-                                readyButton.setOnAction(event7 -> {
-                                    remove_greater.set(remove_greater + inputField.getText() + "\n");
-                                    inputField.clear();
-                                    outputField.setText("Ввод объека Location:\nВведите x" + pressReady);
-                                    readyButton.setOnAction(event8 -> {
-                                        remove_greater.set(remove_greater + inputField.getText() + "\n");
-                                        inputField.clear();
-                                        outputField.setText("Введите y" + pressReady);
-                                        readyButton.setOnAction(event9 -> {
-                                            remove_greater.set(remove_greater + inputField.getText() + "\n");
-                                            inputField.clear();
-                                            outputField.setText("Введите название локации" + pressReady);
-                                            readyButton.setOnAction(event10 -> {
-                                                remove_greater.set(remove_greater + inputField.getText());
-                                                inputField.clear();
-                                                Main.client.executeCommand(String.valueOf(remove_greater));
-                                                waitForAnswer();
-                                                outputField.setText(Main.answerLine);
-                                                buildDataWithProp();
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("update.fxml"),Main.resourceBundle);
+        Parent root2;
+        try {
+            root2 = loader.load();
+            Stage stage2 = new Stage();
+            stage2.setTitle("Update");
+            stage2.getIcons().add(new Image(getClass().getResourceAsStream("../pictures/eva.png")));
+            stage2.setScene(new Scene(root2));
+            stage2.setResizable(false);
+            stage2.sizeToScene();
+            stage2.showAndWait();
+
+            stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    buildDataWithProp();
+                }
             });
-        });
+
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setTitle("Error");
+            alert.setHeaderText("Person error");
+            alert.setContentText("Can't open update window");
+        }
     }
 
     public void help(ActionEvent actionEvent) {
@@ -324,12 +257,12 @@ public class MainController extends Thread implements Initializable {
 
     public void add(ActionEvent actionEvent) {
 
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("add.fxml"),Main.resourceBundle);
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("removegreater.fxml"),Main.resourceBundle);
         Parent root1;
         try {
             root1 = loader.load();
             Stage stage1 = new Stage();
-            stage1.setTitle("Person");
+            stage1.setTitle("Remove");
             stage1.getIcons().add(new Image(getClass().getResourceAsStream("../pictures/eva.png")));
             stage1.setScene(new Scene(root1));
             stage1.setResizable(false);
@@ -347,8 +280,8 @@ public class MainController extends Thread implements Initializable {
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.initStyle(StageStyle.UNDECORATED);
             alert.setTitle("Error");
-            alert.setHeaderText("Person error");
-            alert.setContentText("Can't open person's window");
+            alert.setHeaderText("Remove error");
+            alert.setContentText("Can't open remove's window");
         }
     }
 
@@ -539,7 +472,7 @@ public class MainController extends Thread implements Initializable {
 
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (Person person : persons) {
-            int color_owner_id = (int) (users_keys.get(persons.indexOf(person)) % 5);
+            int color_owner_id = (int) (users_keys.get(persons.indexOf(person)) % 4);
             int x = person.getCoordinates().getX().intValue();
             int y = (int) person.getCoordinates().getY();
             int size = (int) (person.getHeight() / 2);
@@ -547,7 +480,68 @@ public class MainController extends Thread implements Initializable {
             drawPerson(x, (int) (y + Math.sin(offset) * 20), size, color_owner_id);
         }
 
-        //Main.timer.schedule(task, 1000L, 100L);
+    }
+
+    public void showPerson(MouseEvent mouseEvent) {
+        double mouse_x = mouseEvent.getX();
+        double mouse_y = mouseEvent.getY();
+        for (Person person : persons) {
+            int x = person.getCoordinates().getX().intValue();
+            int y = (int) person.getCoordinates().getY();
+            int size = (int) (person.getHeight() / 2);
+            double offset = System.currentTimeMillis() / 300.;
+
+            if(mouse_x > x && mouse_x < x + size && mouse_y > y +Math.sin(offset)*20&& mouse_y < y +Math.sin(offset)*20+size){
+//                if (person.getOwner().getLogin() == Main.username) {
+//                    Main.person = person;
+//                    try {
+//                        FXMLLoader loader = new FXMLLoader(getClass().getResource("show.fxml"), Main.resourceBundle);
+//                        loader.load();
+//                        Parent root = loader.getRoot();
+//                        Stage stage = new Stage();
+//                        stage.setScene(new Scene(root));
+//                        stage.showAndWait();
+//                    } catch (IOException ex) {
+//                        Alert alert = new Alert(Alert.AlertType.ERROR);
+//                        alert.setTitle("Error");
+//                        alert.setHeaderText("Show error");
+//                        alert.setContentText("Can't show this person");
+//                        alert.showAndWait().ifPresent(rs -> {});
+//                    }
+//
+//                } else{
+
+                    Main.person = person;
+                    FXMLLoader loader= new FXMLLoader(getClass().getResource("show.fxml"),Main.resourceBundle);
+                    Parent root2;
+                    try {
+                        root2 = loader.load();
+                        Stage stage2 = new Stage();
+                        stage2.setTitle("Show");
+                        stage2.getIcons().add(new Image(getClass().getResourceAsStream("../pictures/eva.png")));
+                        stage2.setScene(new Scene(root2));
+                        stage2.setResizable(false);
+                        stage2.sizeToScene();
+                        stage2.showAndWait();
+
+//                        stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//                            public void handle(WindowEvent we) {
+//                                buildDataWithProp();
+//                            }
+//                        });
+
+                    } catch (IOException e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.initModality(Modality.APPLICATION_MODAL);
+                        alert.initStyle(StageStyle.UNDECORATED);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Show error");
+                        alert.setContentText("Can't open show window");
+                    }
+
+            }
+        }
+        //System.out.println(mouse_x + " " + mouse_y);
     }
 
     public void createListeners(FilteredList<Person> filteredData) {
@@ -681,43 +675,6 @@ public class MainController extends Thread implements Initializable {
                 } else return false;
             });
         });
-    }
-
-    public void showPerson(MouseEvent mouseEvent) {
-        double mouse_x = mouseEvent.getX();
-        double mouse_y = mouseEvent.getY();
-        for (Person person : persons) {
-            int x = person.getCoordinates().getX().intValue();
-            int y = (int) person.getCoordinates().getY();
-            int size = (int) (person.getHeight() / 2);
-            double offset = System.currentTimeMillis() / 300.;
-
-            if(mouse_x > x && mouse_x < x + size && mouse_y > y +Math.sin(offset)*20&& mouse_y < y +Math.sin(offset)*20+size){
-
-                if (person.getOwner().getLogin() == Main.username) {
-                    //Main.person = (Person) Main.collectionWorker.get_by_id(dragon.getId()); //TODO: ИСПРАВЬ
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("DragonUpdate.fxml"));
-
-                    try {
-                        loader.load();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    Parent root = loader.getRoot();
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.showAndWait();
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Auth error");
-                    alert.setContentText("Access error");
-                    alert.showAndWait().ifPresent(rs -> {});
-                }
-            }
-        }
-        //System.out.println(mouse_x + " " + mouse_y);
     }
 
     public void rus(ActionEvent actionEvent) {

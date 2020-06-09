@@ -4,19 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import markovpetr.main.Main;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UpdateController implements Initializable{
+public class RemoveController implements Initializable{
 
     public TextField idField;
     public TextField nameField;
@@ -33,19 +30,21 @@ public class UpdateController implements Initializable{
     public Button readyButton;
 
 
-    public void upd(ActionEvent actionEvent) {
-            String upd = "update " + idField.getText() + "\n" + nameField.getText() + "\n" + coord_xField.getText() + "\n" + coord_yField.getText() + "\n" +
-                    heightField.getText() + "\n" + passportField.getText() + "\n" + colorBox.getValue().toString() + "\n" +
-                    countryBox.getValue().toString() + "\n" + loc_xField.getText() + "\n" + loc_yField.getText() + "\n" + loc_nameField.getText();
-            Main.client.executeCommand(upd);
-            Main.mainController.buildDataWithProp();
-            Main.mainController.outputField.setText(Main.answerLine);
+    public void remove(ActionEvent actionEvent) {
+        String add = "remove_greater\n\n"+nameField.getText()+"\n"+coord_xField.getText()+"\n"+coord_yField.getText()+"\n"+
+                heightField.getText()+"\n"+passportField.getText()+"\n"+colorBox.getValue().toString()+"\n"+
+                countryBox.getValue().toString()+"\n"+loc_xField.getText()+"\n"+loc_yField.getText()+"\n"+ loc_nameField.getText();
+        Main.client.executeCommand(add);
+        Main.mainController.outputField.setText(Main.answerLine);
+        Main.mainController.buildDataWithProp();
         Stage stage = (Stage) readyButton.getScene().getWindow();
         stage.close();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        idField.setText("------------");
+        idField.setEditable(false);
         userField.setText(Main.username);
         userField.setEditable(false);
 

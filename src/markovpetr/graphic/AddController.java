@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import markovpetr.main.Main;
 
 import java.net.URL;
@@ -29,7 +30,7 @@ public class AddController implements Initializable{
     public TextField userField;
     public ComboBox colorBox;
     public ComboBox countryBox;
-
+    public Button readyButton;
 
 
     public void send(ActionEvent actionEvent) {
@@ -37,7 +38,10 @@ public class AddController implements Initializable{
                 heightField.getText()+"\n"+passportField.getText()+"\n"+colorBox.getValue().toString()+"\n"+
                 countryBox.getValue().toString()+"\n"+loc_xField.getText()+"\n"+loc_yField.getText()+"\n"+ loc_nameField.getText();
         Main.client.executeCommand(add);
+        Main.mainController.outputField.setText(Main.answerLine);
         Main.mainController.buildDataWithProp();
+        Stage stage = (Stage) readyButton.getScene().getWindow();
+        stage.close();
     }
 
     @Override

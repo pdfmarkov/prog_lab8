@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import markovpetr.main.Main;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class ShowController implements Initializable{
@@ -64,7 +66,8 @@ public class ShowController implements Initializable{
         countryBox.setEditable(false);
         countryBox.setValue(Main.person.getNationality().toString());
         dateField.setEditable(false);
-        dateField.setText(String.valueOf(Main.person.getCreationDate()));
+        String str = LocalTime.parse(Main.person.getCreationDate().toLocalTime().toString()) +" "+ LocalDate.parse(Main.person.getCreationDate().toLocalDate().toString());
+        dateField.setText(str);
 
 
     }
