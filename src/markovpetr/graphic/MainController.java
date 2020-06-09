@@ -2,11 +2,15 @@ package markovpetr.graphic;
 
 import com.markovpetr.command.entity.*;
 
+import javafx.animation.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +23,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import markovpetr.main.Main;
 
 import java.io.FileInputStream;
@@ -35,6 +42,7 @@ import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import javafx.scene.paint.Color;
 
 public class MainController extends Thread implements Initializable {
 
@@ -124,14 +132,26 @@ public class MainController extends Thread implements Initializable {
     @FXML
     private TableView<Person> dbTable;
 
+    private List<Color> colors = new ArrayList<>();
 
     private String pressReady = " " + Main.resourceBundle.getString("ready_line_text");
     private ObservableList<Person> masterData = FXCollections.observableArrayList();
     private List<Person> persons = new LinkedList<>();
     private List<Integer> users_keys = new ArrayList<>();
+    private AnimationTimer timer;
+    private Timeline timeline;
+    private DoubleProperty opacity;
+    private DoubleProperty koef;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        colors.add(Color.GREEN);
+        colors.add(Color.RED);
+        colors.add(Color.ORANGE);
+        colors.add(Color.HOTPINK);
+        colors.add(Color.AQUA);
+        colors.add(Color.SILVER);
+        colors.add(Color.CHOCOLATE);
 
         setDaemon(true);
         setUsername(Main.username);
@@ -156,6 +176,34 @@ public class MainController extends Thread implements Initializable {
         SortedList<Person> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(dbTable.comparatorProperty());
         dbTable.setItems(sortedData);
+
+        opacity  = new SimpleDoubleProperty();
+        koef  = new SimpleDoubleProperty();
+
+        timeline = new Timeline(
+
+                new KeyFrame(Duration.seconds(0),
+                        new KeyValue(opacity, 0),
+                        new KeyValue(koef, 0.3)
+                ),
+                new KeyFrame(Duration.seconds(3),
+                        new KeyValue(opacity, 1),
+                        new KeyValue(koef, 1.0)
+                )
+
+        );
+        timeline.setAutoReverse(true);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                draw(opacity, koef);
+            }
+        };
+
+        timer.start();
+        timeline.play();
 
     }
 
@@ -220,12 +268,12 @@ public class MainController extends Thread implements Initializable {
     }
 
     public void removegreater(ActionEvent actionEvent) {
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("update.fxml"),Main.resourceBundle);
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("removegreater.fxml"),Main.resourceBundle);
         Parent root2;
         try {
             root2 = loader.load();
             Stage stage2 = new Stage();
-            stage2.setTitle("Update");
+            stage2.setTitle("Remove");
             stage2.getIcons().add(new Image(getClass().getResourceAsStream("../pictures/eva.png")));
             stage2.setScene(new Scene(root2));
             stage2.setResizable(false);
@@ -257,12 +305,12 @@ public class MainController extends Thread implements Initializable {
 
     public void add(ActionEvent actionEvent) {
 
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("removegreater.fxml"),Main.resourceBundle);
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("add.fxml"),Main.resourceBundle);
         Parent root1;
         try {
             root1 = loader.load();
             Stage stage1 = new Stage();
-            stage1.setTitle("Remove");
+            stage1.setTitle("Add");
             stage1.getIcons().add(new Image(getClass().getResourceAsStream("../pictures/eva.png")));
             stage1.setScene(new Scene(root1));
             stage1.setResizable(false);
@@ -370,7 +418,6 @@ public class MainController extends Thread implements Initializable {
         masterData = FXCollections.observableArrayList();
         masterData.addAll(persons);
         dbTable.setItems(masterData);
-        draw();
     }
 
     public void fillPersons() {
@@ -457,27 +504,44 @@ public class MainController extends Thread implements Initializable {
         }
     }
 
-    public void drawPerson(int x, int y, int size, int color) {
-        try {
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            FileInputStream inputstream = new FileInputStream("C:\\Users\\chann\\Desktop\\lab7\\CoolerClient\\src\\markovpetr\\pictures\\" + color + ".png");
-            Image image = new Image(inputstream);
-            gc.drawImage(image, x, y, size, size);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public void startDraw(Event event) {
+        timer.start();
+        timeline.play();
     }
 
-    public void draw() {
+    public void drawPerson(int x, int y, int size, int color, DoubleProperty op, DoubleProperty koef) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+//            FileInputStream inputstream = new FileInputStream("C:\\Users\\chann\\Desktop\\lab7\\CoolerClient\\src\\markovpetr\\pictures\\" + color + ".png");
+//            Image image = new Image(inputstream);
+//            gc.drawImage(image, x, y, size, size);
+
+//        Circle circle = new Circle(x,y,size);
+//        circle.setRadius(size/2);
+//        circle.centerXProperty().bind(canvas.widthProperty().multiply(x).divide(100));
+//        circle.centerYProperty().bind(canvas.widthProperty().multiply(y).divide(100));
+//        circle.setFill(Paint.valueOf("RED"));
+
+//        FadeTransition st = new FadeTransition(Duration.millis(3000), circle);
+//        st.setFromValue(0);
+//        st.setToValue(1);
+//        st.play();
+        gc.setFill(colors.get(color).deriveColor(0, 1, 1, op.get()));
+        gc.fillOval(x, y, koef.doubleValue() * size, koef.doubleValue() * size);
+
+
+    }
+
+    public void draw(DoubleProperty op,DoubleProperty koef) {
 
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
         for (Person person : persons) {
-            int color_owner_id = (int) (users_keys.get(persons.indexOf(person)) % 4);
+            int color_owner_id = (int) (users_keys.get(persons.indexOf(person)) % 7);
             int x = person.getCoordinates().getX().intValue();
             int y = (int) person.getCoordinates().getY();
             int size = (int) (person.getHeight() / 2);
-            double offset = System.currentTimeMillis() / 300.;
-            drawPerson(x, (int) (y + Math.sin(offset) * 20), size, color_owner_id);
+//            double offset = System.currentTimeMillis() / 300.;
+            drawPerson(x, y, size, color_owner_id, op, koef);
         }
 
     }
@@ -733,6 +797,7 @@ public class MainController extends Thread implements Initializable {
             this.sleep(100);
         } catch (InterruptedException e) { }
     }
+
 
 //    public void buildData(){
 //        Connection c;

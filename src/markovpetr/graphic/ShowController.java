@@ -13,6 +13,7 @@ import markovpetr.main.Main;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class ShowController implements Initializable{
@@ -66,7 +67,9 @@ public class ShowController implements Initializable{
         countryBox.setEditable(false);
         countryBox.setValue(Main.person.getNationality().toString());
         dateField.setEditable(false);
-        String str = LocalTime.parse(Main.person.getCreationDate().toLocalTime().toString()) +" "+ LocalDate.parse(Main.person.getCreationDate().toLocalDate().toString());
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String str = formatterTime.format(LocalTime.parse(Main.person.getCreationDate().toLocalTime().toString())) +" "+ formatterDate.format(LocalDate.parse(Main.person.getCreationDate().toLocalDate().toString()));
         dateField.setText(str);
 
 
