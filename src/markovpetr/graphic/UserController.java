@@ -36,7 +36,6 @@ public class UserController extends Thread implements Initializable {
         }
 
         public void auth(ActionEvent actionEvent) {
-                FXMLLoader loader = new FXMLLoader();
 
                 if (!loginField.getText().equals("") || !passwordField.getText().equals("")) {
                         Main.client.executeCommand("auth\n" + loginField.getText() + "\n" + passwordField.getText());
@@ -46,7 +45,7 @@ public class UserController extends Thread implements Initializable {
                                 !Main.answerLine.equals("Не удалось получить ответ")) {
                                 Main.username = loginField.getText();
                                 authButton.getScene().getWindow().hide();
-                                loader= new FXMLLoader(getClass().getResource("main.fxml"),Main.resourceBundle);
+                                FXMLLoader loader= new FXMLLoader(getClass().getResource("main.fxml"),Main.resourceBundle);
                                 Parent root;
                                 try{
                                         root = loader.load();
@@ -94,6 +93,7 @@ public class UserController extends Thread implements Initializable {
                                 waitForAnswer();
                                 Main.username = loginField.getText();
                                 Main.client.executeCommand("auth\n" + loginField.getText() + "\n" + passwordField.getText());
+                                waitForAnswer();
                                 registerButton.getScene().getWindow().hide();
                                 loader.setLocation(getClass().getResource("main.fxml"));
                                 Parent root;

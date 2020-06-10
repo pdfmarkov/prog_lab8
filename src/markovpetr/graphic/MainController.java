@@ -223,6 +223,7 @@ public class MainController extends Thread implements Initializable {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                //buildDataWithProp();
                 draw(opacity, koef);
             }
         };

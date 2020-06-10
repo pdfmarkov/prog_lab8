@@ -26,7 +26,7 @@ public class Client {
 			Sender sender = new Sender(channel, address);
 			CommandReader reader = new CommandReader(sender);
 
-			reader.read();
+			//reader.read();
 		} catch (IOException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | CommandAlreadyExistsException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}

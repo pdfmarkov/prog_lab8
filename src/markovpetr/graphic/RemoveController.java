@@ -31,7 +31,7 @@ public class RemoveController implements Initializable{
 
 
     public void remove(ActionEvent actionEvent) {
-        String add = "remove_greater\n\n"+nameField.getText()+"\n"+coord_xField.getText()+"\n"+coord_yField.getText()+"\n"+
+        String add = "remove_greater\n"+nameField.getText()+"\n"+coord_xField.getText()+"\n"+coord_yField.getText()+"\n"+
                 heightField.getText()+"\n"+passportField.getText()+"\n"+colorBox.getValue().toString()+"\n"+
                 countryBox.getValue().toString()+"\n"+loc_xField.getText()+"\n"+loc_yField.getText()+"\n"+ loc_nameField.getText();
         Main.client.executeCommand(add);

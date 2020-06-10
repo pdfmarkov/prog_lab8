@@ -2,17 +2,13 @@ package markovpetr.main;
 
 import com.markovpetr.command.entity.Person;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import markovpetr.client.Client;
 import markovpetr.graphic.MainController;
-import markovpetr.graphic.UserController;
-
 
 import java.util.Locale;
 import java.util.ResourceBundle;

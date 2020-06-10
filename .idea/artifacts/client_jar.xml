@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="client:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/client_jar</output-path>
+    <root id="archive" name="CoolerClient.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/markovpetr/manifest/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="CoolerClient" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Client/lib/logback-classic-1.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../CommandLib/out/artifacts/CommandLib_jar/CommandLib.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Client/lib/slf4j-api-1.7.30.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Client/lib/gson-2.8.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../CommandLib/lib/postgresql-42.2.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../CommandLib/lib/postgresql-42.2.12.jre6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Client/lib/logback-core-1.3.0-alpha5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
