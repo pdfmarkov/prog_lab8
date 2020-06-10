@@ -39,7 +39,12 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.scene.paint.Color;
@@ -167,6 +172,26 @@ public class MainController extends Thread implements Initializable {
         nationalityColoumn.setCellValueFactory(new PropertyValueFactory<Person, Country>("nationality"));
         locationColoumn.setCellValueFactory(new PropertyValueFactory<Person, Location>("location"));
         userColoumn.setCellValueFactory(new PropertyValueFactory<Person, User>("owner"));
+
+        creatColoumn.setCellFactory(column -> {
+            TableCell<Person, LocalDateTime> cell = new TableCell<Person, LocalDateTime>() {
+                private SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
+
+                @Override
+                protected void updateItem(LocalDateTime item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        Date out = Date.from(item.atZone(ZoneId.systemDefault()).toInstant());
+                        setText(format.format(out));
+                    }
+                }
+            };
+
+            return cell;
+        });
 
         buildDataWithProp();
 
@@ -422,7 +447,6 @@ public class MainController extends Thread implements Initializable {
 
     public void fillPersons() {
         persons.clear();
-
         Connection c;
         try {
             c = DBConnect.connect();
